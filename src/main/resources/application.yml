@@ -1,0 +1,43 @@
+server:
+  port: 8080
+
+spring:
+  output:
+    ansi:
+      enabled: always # console font
+  profiles:
+    active: local
+  sql:
+    init:
+      continue-on-error: true
+  mvc:
+    async:
+      request-timeout: 10000
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/jwt?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&autoReconnect=true
+    username: root
+    password: 1234
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    open-in-view: false
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        order_inserts: true
+        order_updates: true
+        jdbc:
+          batch_size: 1000
+
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
