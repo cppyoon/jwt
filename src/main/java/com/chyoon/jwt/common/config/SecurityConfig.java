@@ -25,7 +25,7 @@ public class SecurityConfig {
     private final JwtProvider jwtProvider;
     private final AuthenticationEntryPoint authenticationEntryPoint;
 
-    private static final String[] PERMIT_ALL_PATTERNS = new String[] {
+    public static final String[] PERMIT_ALL_PATTERNS = new String[] {
             "/api/login",
             "/healthcheck"
     };

@@ -20,25 +20,17 @@ import java.io.IOException;
 @Slf4j
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {// 인증된 사용자 요청 처리, 인증 실패 등 주로 권한 없는 사용자 처리
-    private final HandlerExceptionResolver resolver;
+//    private final HandlerExceptionResolver resolver;
 
-    public JwtAuthenticationEntryPoint(@Qualifier("handlerExceptionResolver") HandlerExceptionResolver resolver) {
-        this.resolver = resolver;
-    }
+//    public JwtAuthenticationEntryPoint(@Qualifier("handlerExceptionResolver") HandlerExceptionResolver resolver) {
+//        this.resolver = resolver;
+//    }
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
         request.setAttribute("exceptionMessage", authException.getMessage());// response log 찍힐 예정
-
-        String exception = String.valueOf(request.getAttribute("exception"));
-        if (exception != null && (exception.equals("INVALID_TOKEN") || exception.equals("EXPIRED_TOKEN"))) {
-            String customExceptionMessage = (String) request.getAttribute("exceptionMessage");
-            response.setStatus(HttpStatus.OK.value());
-            setResponse(response, ResultCode.valueOf(exception));
-        } else {
-            response.setStatus(HttpStatus.OK.value());
-            setResponse(response, ResultCode.UNAUTHORIZED);
-        }
+        response.setStatus(HttpStatus.OK.value());
+        setResponse(response, ResultCode.UNAUTHORIZED);
     }
 
     private void setResponse(HttpServletResponse response, ResultCode responseCode) throws IOException {

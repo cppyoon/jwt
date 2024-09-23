@@ -14,6 +14,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
+
 @Slf4j
 public class JwtAuthenticationFilter  extends OncePerRequestFilter {
 
@@ -22,6 +24,14 @@ public class JwtAuthenticationFilter  extends OncePerRequestFilter {
 
     public JwtAuthenticationFilter(JwtProvider jwtProvider) {
         this.jwtProvider = jwtProvider;
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+
+        String[] excludePath = SecurityConfig.PERMIT_ALL_PATTERNS;
+        String path = request.getRequestURI();
+        return Arrays.stream(excludePath).anyMatch(path::startsWith);
     }
 
     @Override
